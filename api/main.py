@@ -19,9 +19,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     async with PostgresDB(settings.database_url) as database:
         app.state.database = database
         try:
+            logger.info("Application ready")
             # TODO (Task 3): Log API readiness at INFO after the database is ready.
             yield
         finally:
+            logger.info("Application shutting down")
             # TODO (Task 3): Log API shutdown at INFO during cleanup.
             del app.state.database
 
